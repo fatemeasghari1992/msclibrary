@@ -13,7 +13,6 @@
 
 <?php
 require_once('main.php');
-
 $studentNumber = $_COOKIE['studentNumber'];
 ?>
 
@@ -32,6 +31,7 @@ $studentNumber = $_COOKIE['studentNumber'];
                             <tr>
                                 <th>BookID</th>
                                 <th>BookName</th>
+				<th>expired date</th>
 
 
                             </tr>
@@ -39,7 +39,7 @@ $studentNumber = $_COOKIE['studentNumber'];
 
                             <?php
                             $db = Db::getInstance();
-                            $record = $db->query("SELECT bookid,bookName FROM borrowbook WHERE stdid=$studentNumber ");
+                            $record = $db->query("SELECT bookid,bookName,date FROM borrowbook WHERE stdid=$studentNumber ");
                             if($record)
                                 foreach ($record as $item){
                                     echo "<tr class='table-row'>";
@@ -47,7 +47,6 @@ $studentNumber = $_COOKIE['studentNumber'];
                                         echo "<td>";
                                         echo $value;
                                         echo "</td>";
-
                                     }
                                 }
                             ?>
@@ -91,4 +90,3 @@ $studentNumber = $_COOKIE['studentNumber'];
 
 </body>
 </html>
-

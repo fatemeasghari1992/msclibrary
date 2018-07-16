@@ -1,5 +1,6 @@
 <?php
 require_once('main.php');
+date_default_timezone_set('Asia/Tehran');
 $session = $_COOKIE['session'];
 $studentNumber = $_COOKIE['studentNumber'];
 $bookId = $_POST['bookId'];
@@ -24,8 +25,10 @@ if (authenticate($studentNumber,$session)){
         echo "<a href='index.php' class='btn btn-danger'>بازگشت </a>";
         exit;
     }else if($record['Status'] == 1){
+	$Date = date('Y-m-d', time());
+	$Date = date('Y-m-d', strtotime($Date. ' + 7 days'));
         $bookName = $record['Title'];
-        $book = $db->insert("INSERT INTO `borrowbook`(`stdid`,`bookid`,`bookName`) VALUES ('$studentNumber','$bookId','$bookName')");
+        $book = $db->insert("INSERT INTO `borrowbook`(`stdid`,`bookid`,`bookName`,`date`) VALUES ('$studentNumber','$bookId','$bookName','$Date')");
         $db-> query("UPDATE Books SET Status='0' WHERE ID='$bookId'");
         $message = "کتاب شما با موفقیت ثبت شد";
         require_once("succeed.php");
@@ -43,7 +46,6 @@ if (authenticate($studentNumber,$session)){
         echo "<a href='index.php' class='btn btn-warning'>بازگشت </a>";
         exit;
     }
-
 }else{
     $message = "شماره دانشجویی شما منقضی شده است. لطفا مجددا وارد شوید";
     require_once("failed.php");
